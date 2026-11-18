@@ -1,13 +1,13 @@
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    "time"
+	"context"
+	"fmt"
+	"os"
+	"time"
 
-    "go.mongodb.org/mongo-driver/v2/mongo"
-    "go.mongodb.org/mongo-driver/v2/mongo/options"
+	"go.mongodb.org/mongo-driver/v2/mongo"
+	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )
 
 func connectDB() (*mongo.Client, error) {
