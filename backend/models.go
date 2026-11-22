@@ -3,8 +3,8 @@ import (
 	"time"
 )
 type User struct {
-	ID       string `bson:"_id,omitempty"`
-	RoleID   string `bson:"role_id" json:"role_id"`
+	ID       bson.ObjectId `bson:"_id,omitempty"`
+	RoleID   bson.ObjectId `bson:"role_id" json:"role_id"`
 	Email    string `bson:"email" json:"email"`
 	PasswordHash string          `bson:"password_hash" json:"-"`
 	Name     string `bson:"name" json:"name"`
@@ -19,8 +19,8 @@ type Permission struct {
 }
 
 type Role struct {
-	ID   string `bson:"_id,omitempty"`
+	ID   bson.ObjectId `bson:"_id,omitempty"`
 	Name string `bson:"name" json:"name"`
 	Description string `bson:"description" json:"description"`
-	Permissions []Permission `bson:"permissions" json:"permissions"`
+	Permissions []string `bson:"permissions" json:"permissions"`
 }
