@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"go.mongodb.org/mongo-driver/v2/bson"
-	"go.mongodb.org/mongo-driver/v2/mongo/options"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -34,7 +33,7 @@ func GetCodes() []string {
 
 
 func seedAdminRole(ctx context.Context) error {
-	count, err := rolesCollection.CountDocuments(ctx, bson.M{"name": "admin"})
+	count, err := roleCollection.CountDocuments(ctx, bson.M{"name": "admin"})
 	if err != nil {
 		return fmt.Errorf("failed to count admin roles: %v", err)
 	}
@@ -44,7 +43,7 @@ func seedAdminRole(ctx context.Context) error {
 	}
 
 	var codes = GetCodes();
-	result , err := rolesCollection.InsertOne(ctx, Role{
+	result, err := roleCollection.InsertOne(ctx, Role{
 		Name:        "admin",
 		Description: "Administrator role with all permissions",
 		Permissions: codes,
@@ -60,7 +59,7 @@ func seedAdminRole(ctx context.Context) error {
 
 
 func seedAdminUser(ctx context.Context) error {
-	count, err := usersCollection.CountDocuments(ctx, bson.M{})
+	count, err := userCollection.CountDocuments(ctx, bson.M{})
 	if err != nil {
 		return fmt.Errorf("failed to count users: %v", err)
 	}
@@ -70,7 +69,7 @@ func seedAdminUser(ctx context.Context) error {
 	}
 
 	var adminRole Role
-	result , err := rolesCollection.FindOne(ctx, bson.M{"name": "admin"}).Decode(&adminRole)
+	err = roleCollection.FindOne(ctx, bson.M{"name": "admin"}).Decode(&adminRole)
 	if err != nil {
 		return fmt.Errorf("failed to find admin role: %v", err)
 	}
@@ -97,10 +96,14 @@ func seedAdminUser(ctx context.Context) error {
 		CreatedAt:    time.Now(),
 	}
 
-	result, err = usersCollection.InsertOne(ctx, adminUser)
+	result , err := userCollection.InsertOne(ctx, adminUser)
 	if err != nil {
 		return fmt.Errorf("failed to insert admin user: %v", err)
 	}
+	fmt.Printf("Admin user seeded with ID: %v\n", result.InsertedID);
+
+	log.Println("Admin user seeded successfully.")
+	return nil
 
 }
 
