@@ -14,14 +14,14 @@ import (
 
 
 var systempersmissions = []Permission{
-	{code: "file:read", description: "Read a file"},
-	{code: "file:upload", description: "Upload a file"},
-	{code: "file:download", description: "Download a file"},
-	{code: "file:delete", description: "Delete a file"},
-	{code: "user:manage", description: "Manage users"},
-	{code: "role:manage", description: "Manage roles"},
-	{code: "rule:manage", description: "Manage rules"},	
-	{code: "audit:view", description: "View audit logs"},
+	{Code: "file:read", Description: "Read a file"},
+	{Code: "file:upload", Description: "Upload a file"},
+	{Code: "file:download", Description: "Download a file"},
+	{Code: "file:delete", Description: "Delete a file"},
+	{Code: "user:manage", Description: "Manage users"},
+	{Code: "role:manage", Description: "Manage roles"},
+	{Code: "rule:manage", Description: "Manage rules"},	
+	{Code: "audit:view", Description: "View audit logs"},
 }
 
 func GetCodes() []string {
@@ -101,6 +101,6 @@ func seedAdminUser(ctx context.Context) error {
 	if err != nil {
 		return fmt.Errorf("failed to insert admin user: %v", err)
 	}
-	
+
 }
 
