@@ -33,3 +33,30 @@ func GetCodes() []string {
 }
 
 
+func seedAdminRole(ctx context.Context) error {
+	count, err := rolesCollection.CountDocuments(ctx, bson.M{"name": "admin"})
+	if err != nil {
+		return fmt.Errorf("failed to count admin roles: %v", err)
+	}
+	if count > 0 {
+		log.Println("Admin role already exists, skipping seeding.")
+		return nil
+	}
+
+	var codes = GetCodes();
+	result , err := rolesCollection.InsertOne(ctx, Role{
+		Name:        "admin",
+		Description: "Administrator role with all permissions",
+		Permissions: codes,
+	})
+
+	if err != nil {
+		return fmt.Errorf("failed to insert admin role: %v", err)
+	}
+
+	fmt.Printf("Admin role seeded with ID: %v\n", result.InsertedID)
+	return nil
+}
+
+
+
