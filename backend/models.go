@@ -1,7 +1,10 @@
 package main
 import (
 	"time"
+
+	"go.mongodb.org/mongo-driver/v2/bson"
 )
+
 type User struct {
 	ID       bson.ObjectId `bson:"_id,omitempty"`
 	RoleID   bson.ObjectId `bson:"role_id" json:"role_id"`
