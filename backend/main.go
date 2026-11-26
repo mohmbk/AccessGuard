@@ -36,6 +36,17 @@ func main() {
 
 	log.Println("MongoDB connecté")
 
+	err := seedAdminRole(context.Background());
+	if err != nil {
+		log.Fatalf("Error seeding admin role: %v", err)
+	}
+
+	err = seedAdminUser(context.Background());
+	if err != nil {
+		log.Fatalf("Error seeding admin user: %v", err)
+	}
+	
+
 	userCollection = client.Database("accessGuardDB").Collection("users")
 	fileCollection = client.Database("accessGuardDB").Collection("files")
 	roleCollection = client.Database("accessGuardDB").Collection("roles")
